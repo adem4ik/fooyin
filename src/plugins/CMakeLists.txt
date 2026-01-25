@@ -25,6 +25,7 @@ set(
     tageditor
     thumbnailtoolbar
     vumeter
+    wasapi
     wavebar
 )
 
@@ -60,7 +61,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(WIN32)
-    list(APPEND FOOYIN_DEFAULT_PLUGINS mediacontrol thumbnailtoolbar)
+    list(APPEND FOOYIN_DEFAULT_PLUGINS mediacontrol thumbnailtoolbar wasapi)
 endif()
 
 fooyin_resolve_plugin_selection(
@@ -109,13 +110,7 @@ fooyin_add_selected_plugin(vumeter)
 fooyin_add_selected_plugin(wavebar)
 
 if(WIN32)
-    fooyin_add_selected_plugin(mediacontrol)
-    fooyin_add_selected_plugin(thumbnailtoolbar)
-else()
-    if("mediacontrol" IN_LIST FOOYIN_RESOLVED_PLUGINS)
-        message(STATUS "mediacontrol plugin is only available on Windows; skipping.")
-    endif()
-    if("thumbnailtoolbar" IN_LIST FOOYIN_RESOLVED_PLUGINS)
-        message(STATUS "thumbnailtoolbar plugin is only available on Windows; skipping.")
-    endif()
+    add_subdirectory(mediacontrol)
+    add_subdirectory(thumbnailtoolbar)
+    add_subdirectory(wasapi)
 endif()
